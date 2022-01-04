@@ -6,14 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,115 +27,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composeexample.R
 import com.example.composeexample.ui.graphics.standardQuadFromTo
+import com.example.composeexample.ui.multiUsageBlocks.ChipsView
+import com.example.composeexample.ui.multiUsageBlocks.GreetingView
+import com.example.composeexample.ui.multiUsageBlocks.MeditationView
 import com.example.composeexample.ui.theme.*
 
 @ExperimentalFoundationApi
 @Preview
 @Composable
-fun HomeView() {
-    Column {
-        GreetingSection()
-        ChipSection(chips = listOfChips())
-        CurrentMeditation()
+fun HomeScreen() {
+    Column(
+        modifier = Modifier
+            .background(DeepBlue)
+            .fillMaxSize()
+    ) {
+        GreetingView("Jetpack Compose")
+        ChipsView(chips = listOfChips())
+        MeditationView()
         FeatureSection(features = listOfFeatures())
-    }
-}
-
-@Composable
-fun GreetingSection(name: String = "Jetpack Compose") {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(15.dp)
-    ) {
-        Column(verticalArrangement = Arrangement.Center) {
-            Text(
-                text = "Good Morning, $name",
-                style = MaterialTheme.typography.h2
-            )
-            Text(
-                text = stringResource(R.string.good_day_wish),
-                style = MaterialTheme.typography.body1
-            )
-        }
-
-        Icon(
-            painter = painterResource(id = R.drawable.ic_search),
-            contentDescription = stringResource(R.string.cd_search),
-            tint = Color.White,
-            modifier = Modifier.size(24.dp)
-        )
-    }
-}
-
-@Composable
-fun ChipSection(chips: List<String>) {
-    var selectedChipIndex by remember {
-        mutableStateOf(0)
-    }
-    LazyRow {
-        items(chips.size) {
-            Box(contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .padding(start = 15.dp, top = 15.dp, bottom = 15.dp)
-                    .clickable {
-                        selectedChipIndex = it
-                    }
-                    .clip(RoundedCornerShape(15.dp))
-                    .background(
-                        if (selectedChipIndex == it) ButtonBlue
-                        else DarkerButtonBlue
-                    )
-                    .padding(14.dp)
-            ) {
-                Text(
-                    text = chips[it],
-                    color = TextWhite
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun CurrentMeditation(color: Color = LightRed) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
-            .padding(15.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .background(color = color)
-            .padding(horizontal = 15.dp, vertical = 20.dp)
-            .fillMaxWidth()
-    ) {
-        Column {
-            Text(
-                text = stringResource(R.string.daily_thought),
-                style = MaterialTheme.typography.h2
-            )
-            Text(
-                text = stringResource(R.string.meditation_time),
-                style = MaterialTheme.typography.body1,
-                color = TextWhite
-            )
-        }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .padding(0.dp)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_play),
-                contentDescription = stringResource(R.string.cd_play),
-                tint = Color.White,
-                modifier = Modifier.size(16.dp)
-            )
-        }
     }
 }
 
@@ -260,86 +167,8 @@ fun FeatureItem(feature: Feature) {
     }
 }
 
-//@Composable
-//fun BottomMenuView(
-//    modifier: Modifier = Modifier,
-//    activeHighlightColor: Color = ButtonBlue,
-//    activeTextColor: Color = Color.White,
-//    inactiveTextColor: Color = AquaBlue,
-//    initialSelectedItemIndex: Int = 0
-//) {
-//    var selectedItemIndex by remember {
-//        mutableStateOf(initialSelectedItemIndex)
-//    }
-//    Row(
-//        horizontalArrangement = Arrangement.SpaceAround,
-//        verticalAlignment = Alignment.CenterVertically,
-//        modifier = modifier
-//            .fillMaxWidth()
-//            .background(DeepBlue)
-//            .padding(4.dp)
-//    ) {
-//        val items = listOf(
-//            BottomMenuData(stringResource(R.string.home), R.drawable.ic_home),
-//            BottomMenuData(stringResource(R.string.meditate), R.drawable.ic_bubble),
-//            BottomMenuData(stringResource(R.string.sleep), R.drawable.ic_moon),
-//            BottomMenuData(stringResource(R.string.music), R.drawable.ic_music),
-//            BottomMenuData(stringResource(R.string.profile), R.drawable.ic_profile),
-//        )
-//
-//        items.forEachIndexed { index, item ->
-//            BottomMenuItem(
-//                item = item,
-//                isSelected = index == selectedItemIndex,
-//                activeHighlightColor = activeHighlightColor,
-//                activeTextColor = activeTextColor,
-//                inactiveTextColor = inactiveTextColor
-//            ) {
-//                selectedItemIndex = index
-//            }
-//        }
-//    }
-//}
-
-//@Composable
-//fun BottomMenuItem(
-//    item: BottomMenuData,
-//    isSelected: Boolean = false,
-//    activeHighlightColor: Color = ButtonBlue,
-//    activeTextColor: Color = Color.White,
-//    inactiveTextColor: Color = AquaBlue,
-//    onItemClick: () -> Unit
-//) {
-//    Column(
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center,
-//        modifier = Modifier.clickable {
-//            onItemClick()
-//        }
-//    ) {
-//        Box(
-//            contentAlignment = Alignment.Center,
-//            modifier = Modifier
-//                .clip(RoundedCornerShape(10.dp))
-//                .background(if (isSelected) activeHighlightColor else Color.Transparent)
-//                .padding(10.dp)
-//        ) {
-//            Icon(
-//                painter = painterResource(id = item.iconId),
-//                contentDescription = item.title,
-//                tint = if (isSelected) activeTextColor else inactiveTextColor,
-//                modifier = Modifier.size(20.dp)
-//            )
-//        }
-//        Text(
-//            text = item.title,
-//            color = if (isSelected) activeTextColor else inactiveTextColor
-//        )
-//    }
-//}
-
 @Composable
-private fun listOfChips() = listOf(
+fun listOfChips() = listOf(
     stringResource(R.string.sweet_sleep),
     stringResource(R.string.Insomnia),
     stringResource(R.string.mediation),
