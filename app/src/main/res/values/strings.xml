@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Compose example</string>
+    <string name="good_day_wish">We wish you to have a good day!</string>
+    <string name="cd_search">Search</string>
+    <string name="daily_thought">Daily Thought</string>
+    <string name="meditation_time">Meditation 3-10 min</string>
+    <string name="cd_play">Play</string>
+    <string name="features">Features</string>
+    <string name="start">Start</string>
+    <string name="sweet_sleep">Sweet sleep</string>
+    <string name="Insomnia">Insomnia</string>
+    <string name="Depression">Depression</string>
+    <string name="mediation">Sleep meditation</string>
+    <string name="tips">Tips for sleeping</string>
+    <string name="iland">Night island</string>
+    <string name="claming_sounds">Calming sounds</string>
+    <string name="home">Home</string>
+    <string name="meditate">Meditate</string>
+    <string name="sleep">Sleep</string>
+    <string name="music">Music</string>
+    <string name="profile">Profile</string>
+</resources>
